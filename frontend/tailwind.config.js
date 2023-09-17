@@ -8,12 +8,15 @@ export default {
     extend: {
       colors: {
         primary: "#44a03e",
-        secondary: "#d0d2af"
+        secondary: "#000000",
+        optional: "#eeeeee",
+        onMouse: "#166534",
       },
       fontFamily: {
-        primary: ['Roboto Mono', 'monospace'],
-        secondary: ['Roboto', 'sans-serif']
-      }
+        primary: ['Roboto', 'sans-serif'],
+        secondary: ['Karla', 'sans-serif'],
+        optional : ['Inter', 'sans-serif'],
+      },
     },
   },
   plugins: [],
