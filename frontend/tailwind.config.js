@@ -11,6 +11,7 @@ export default {
         secondary: "#000000",
         optional: "#eeeeee",
         onMouse: "#166534",
+        shadow: "#d0d0d0",
       },
       fontFamily: {
         primary: ['Roboto', 'sans-serif'],

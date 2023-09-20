@@ -7,6 +7,9 @@ import { Leftbar } from '../layout/Leftbar';
 import { Header } from '../layout/Header';
 import { Breadcrumbs } from '../layout/Breadcrumbs';
 import face_logo from '../../assets/face_logo.png';
+import { Notification } from '../Notification/Notification';
+import { FaClipboardList } from 'react-icons/fa'
+import { BiSolidUserPlus } from 'react-icons/bi'
 export const Dashboard = ({title, leftbar,setLeftbar}) => {
 
     // const videoRef = useRef(null);
@@ -96,21 +99,53 @@ export const Dashboard = ({title, leftbar,setLeftbar}) => {
         </div>
         <div className='w-full h-full'>
             <Header user={user} logout={logout} leftbar={() => setLeftbar(prevState => !prevState)}/>
-            <div className='h-[85%]'>
+            <div className='h-[85%] overflow-y-hidden'>
             
                 <div className='m-2'>
                     <Breadcrumbs/>
                 </div>
                 <div className='h-full grid grid-cols-3 gap-5 px-5'>
                     <div className='grid grid-rows-4 gap-5 col-span-3 lg:col-span-2'>
-                        <div className='row-span-1 rounded-md bg-optional shadow-md shadow-spread shadow-gray-300'>
+                        <div className='row-span-1 p-3 rounded-md bg-optional shadow-md shadow-spread shadow-gray-300'>
+                            <div className='flex flex-col items-center justify-between md:flex-row'>
+                                <h1 className='font-optional font-bold text-primary text-2xl'>Good Morning, Markme19</h1>
+                                <h1 className='font-optional text-primary font-semibold'>Date today: 
+                                    <span className='font-normal italic text-black'> September 18, 2023</span>
+                                </h1>
+                            </div>
+                            <div>
+                                <h1 className='font-optional text-gray-500 italic mt-3'>Shortcut Access</h1>
+                                <div className='hidden sm:flex gap-5 px-5 mt-2 '>
+                                    <button 
+                                        className='bg-primary px-4 py-2 text-white hover:bg-onMouse rounded-md text-sm
+                                        transition-all delay-50 ease-in-out flex items-center gap-2'>
+                                        <FaClipboardList />
+                                        View Attendance Record
+                                    </button>
+                                    <button 
+                                        className='bg-primary px-4 py-2 text-white hover:bg-onMouse rounded-md text-sm
+                                        transition-all delay-50 ease-in-out flex items-center gap-2'>
+                                        <BiSolidUserPlus className='text-xl'/>
+                                        Create New Employee
+                                    </button>
+                                </div>
 
+                                {/* Mobile view xs size */}
+                                <div className='flex sm:hidden'>
+                                <button 
+                                        className='bg-primary px-4 py-2 text-white hover:bg-onMouse rounded-md text-sm
+                                        transition-all delay-50 ease-in-out flex items-center gap-2 mx-auto'>
+                                        <BiSolidUserPlus className='text-xl'/>
+                                        Shortcut Access
+                                </button>
+                                </div>
+                            </div>
                         </div>
                         <div 
-                            className='row-span-3 flex-colrounded-md bg-optional shadow-md
+                            className='row-span-3 flex-col rounded-md bg-optional shadow-md
                             shadow-spread shadow-gray-300 p-5'>
 
-                                <div className='flex items-center justify-between'>
+                                <div className='flex flex-col items-center justify-between md:flex-row'>
                                     <h1 className='font-primary text-xl'>Click open to start</h1>
                                     <button
                                         className='bg-primary px-5 py-2 rounded-md font-secondary text-white
@@ -128,7 +163,8 @@ export const Dashboard = ({title, leftbar,setLeftbar}) => {
                                 </div>
                         </div>
                     </div>
-                    <div className='hidden lg:block border rounded-md bg-optional shadow-md shadow-spread shadow-gray-300'>
+                    <div className='hidden lg:block rounded-md bg-optional shadow-md overflow-y-auto shadow-spread shadow-gray-300'>
+                        <Notification />
                     </div>
                 </div>
 

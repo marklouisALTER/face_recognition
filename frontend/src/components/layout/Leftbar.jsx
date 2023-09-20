@@ -52,17 +52,27 @@ export const Leftbar = ({leftbar}) => {
             
             <div 
                 onClick={() => setIsTracking(prevState => !prevState)}
-                className={`flex items-center ${leftbar ? 'pt-1 justify-center' : 'p-4 justify-between'} border-r-2 p-2 bg-transparent
+                className={`flex items-center ${leftbar ? 'pt-1 justify-center' : 'p-4 justify-between'} border-r-2 p-2
+                ${isTracking ? 'bg-optional': ''}
                 hover:border-primary hover:bg-optional hover:bg-optional text-secondary hover:text-primary cursor-pointer 
                 transition-all delay-50 ease-in-out`}>
                   <div className={`${leftbar ? '': 'flex gap-2 items-center'}`}>
-                      <BiListCheck className={`${leftbar ? 'text-2xl' : ''} text-1xl lg:text-2xl`} />
+                      <BiListCheck 
+                        className={`${leftbar ? 'text-2xl' : ''} text-1xl lg:text-2xl
+                        ${isTracking ? 'text-primary': ''}
+                        `}/>
                       <p 
-                        className={`${leftbar ? 'hidden': 'block'} font-secondary ease-in-out text-sm md:text-md`}>
+                        className={`${leftbar ? 'hidden': 'block'} 
+                          ${isTracking ? 'text-primary': ''}
+                          font-secondary ease-in-out text-sm md:text-md`}>
                           Tracking Record
                       </p>
                   </div>
-                  {!leftbar && <AiFillCaretDown className={`${isTracking ? 'rotate-0': 'rotate-90'}`}/>}
+                  {!leftbar && 
+                    <AiFillCaretDown 
+                      className={`${isTracking ? 'rotate-0': 'rotate-90'}
+                      ${isTracking ? 'text-primary': ''}`
+                      }/>}
             </div>
 
             <div>
@@ -86,27 +96,48 @@ export const Leftbar = ({leftbar}) => {
                     <p className={`${leftbar ? 'hidden': 'block'} font-secondary ease-in-out text-xs md:text-sm`}>Employee Data</p>
                 </NavLink>
 
-                <div className={`${isTracking ? 'block': "hidden"} flex pl-5 gap-2 items-center border-r-2 p-2 bg-transparent
-                hover:border-primary hover:bg-optional text-secondary hover:text-primary cursor-pointer transition-all 
-                delay-50 ease-in-out`}>
+                <NavLink
+                    to={'/tracking-record/attendance-record'}  
+                    className={({isActive, isPending}) => 
+                    isPending ? `${isTracking ? 'block': "hidden"} flex pl-5 gap-2 items-center
+                    border-r-2 p-2 bg-transparent hover:border-primary hover:bg-optional 
+                    text-secondary hover:text-primary cursor-pointer transition-all delay-50 ease-in-out`
+                    :
+                    isActive ? `${isTracking ? 'block': "hidden"} flex pl-5 gap-2 items-center
+                    border-r-2 p-2 bg-optional border-primary text-primary cursor-pointer 
+                    transition-all delay-50 ease-in-out`
+                    :
+                    `${isTracking ? 'block': "hidden"} flex pl-5 gap-2 items-center
+                    border-r-2 p-2 bg-transparent hover:border-primary hover:bg-optional 
+                    text-secondary hover:text-primary cursor-pointer transition-all delay-50 ease-in-out`
+                  }>
                     <FaClipboardList />
                     <p className={`${leftbar ? 'hidden': 'block'} font-secondary ease-in-out text-xs md:text-sm`}>Attendance Record</p>
-                </div>
+                </NavLink>
             </div>
 
             <div 
                 onClick={() => setIsMonitoring(prevState => !prevState)}
-                className={`flex items-center ${leftbar ? 'pt-1 justify-center' : 'p-4 justify-between'} border-r-2 p-2 bg-transparent
+                className={`flex items-center ${leftbar ? 'pt-1 justify-center' : 'p-4 justify-between'} border-r-2 p-2
                 hover:border-primary hover:bg-optional hover:bg-optional text-secondary hover:text-primary cursor-pointer 
-                transition-all delay-50 ease-in-out`}>
+                transition-all delay-50 ease-in-out ${isMonitoring ? 'border-primary bg-optional': 'bg-transparent'} `}>
                   <div className={`${leftbar ? '': 'flex gap-2 items-center'}`}>
-                      <FaUsers className={`${leftbar ? 'text-2xl' : ''} text-1xl lg:text-2xl`} />
+                      <FaUsers 
+                        className={`${leftbar ? 'text-2xl' : ''}
+                        ${isMonitoring ? 'text-primary': ''}
+                        text-1xl lg:text-2xl`} />
                       <p 
-                        className={`${leftbar ? 'hidden': 'block'} font-secondary ease-in-out text-sm md:text-md`}>
+                        className={`${leftbar ? 'hidden': 'block'}
+                        ${isMonitoring ? 'text-primary': ''}
+                        font-secondary ease-in-out text-sm md:text-md`}>
                           Monitoring and Control
                       </p>
                   </div>
-                  {!leftbar && <AiFillCaretDown className={`${isMonitoring ? 'rotate-0': 'rotate-90'}`}/>}
+                  {!leftbar && 
+                    <AiFillCaretDown 
+                      className={`${isMonitoring ? 'rotate-0': 'rotate-90'}
+                      ${isMonitoring ? 'text-primary': ''}`}
+                      />}
             </div>
             <NavLink 
                 to={'/monitoring-and-control/add-employee'} 

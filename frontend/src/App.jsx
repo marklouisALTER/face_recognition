@@ -4,8 +4,10 @@ import { Dashboard } from './components/pages/Dashboard';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AddEmployee } from './components/pages/AddEmployee';
 import { EmpData } from './components/pages/EmpData';
+import { AttendanceRecord } from './components/pages/AttendanceRecord';
+
 function App() {
-  const [leftbar, setLeftbar] = useState(false);
+  const [leftbar, setLeftbar] = useState(true);
 
   return (
     <BrowserRouter>
@@ -47,6 +49,16 @@ function App() {
               setLeftbar={setLeftbar}
             />
         } />
+
+        <Route
+          path="/tracking-record/attendance-record"
+          element={
+            <AttendanceRecord
+              title="Attendance Record"
+              leftbar={leftbar}
+              setLeftbar={setLeftbar}
+            />
+          }/>
       </Routes>
     </BrowserRouter>
   );

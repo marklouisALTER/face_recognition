@@ -1,8 +1,8 @@
 import React from 'react'
-
+import levi_logo from '../../assets/levi.jpg'
 export const Table = () => {
   return (
-    <table className="min-w-full leading-normal">
+    <table className="min-w-full mt-10 leading-normal">
     <thead>
       <tr>
         <th
@@ -13,21 +13,23 @@ export const Table = () => {
         <th
           className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
         >
-          Amount
+          Date
         </th>
         <th
           className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
         >
-          Issued / Due
+          Time in
+        </th>
+        <th
+          className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+        >
+          Time out
         </th>
         <th
           className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
         >
           Status
         </th>
-        <th
-          className="px-3 py-3 border-b-2 border-gray-200 bg-gray-100"
-        ></th>
       </tr>
     </thead>
     <tbody>
@@ -37,25 +39,29 @@ export const Table = () => {
             <div className="flex-shrink-0 w-10 h-10">
               <img
                 className="w-full h-full rounded-full"
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+                src={levi_logo}
                 alt=""
               />
             </div>
             <div className="">
               <p className="text-gray-900 whitespace-no-wrap text-center">
-                Molly Sanders
+                Christian Levi Gernale
               </p>
               <p className="text-gray-600 whitespace-no-wrap text-center">000004</p>
             </div>
           </div>
         </td>
         <td className="px-3 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">$20,000</p>
-          <p className="text-gray-600 whitespace-no-wrap">USD</p>
+          <p className="text-gray-900 whitespace-no-wrap">September 19 2023</p>
+          <p className="text-gray-600 whitespace-no-wrap">09/19/2023</p>
         </td>
         <td className="px-3 py-5 border-b border-gray-200 bg-white text-sm">
-          <p className="text-gray-900 whitespace-no-wrap">Sept 28, 2019</p>
-          <p className="text-gray-600 whitespace-no-wrap">Due in 3 days</p>
+          <p className="text-gray-900 whitespace-no-wrap">----</p>
+          <p className="text-gray-600 whitespace-no-wrap">--</p>
+        </td>
+        <td className="px-3 py-5 border-b border-gray-200 bg-white text-sm">
+          <p className="text-gray-900 whitespace-no-wrap">----</p>
+          <p className="text-gray-600 whitespace-no-wrap">--</p>
         </td>
         <td className="px-3 py-5 border-b border-gray-200 bg-white text-sm">
           <span
@@ -63,13 +69,13 @@ export const Table = () => {
           >
             <span
               aria-hidden
-              className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+              className="absolute inset-0 bg-red-300 opacity-50 rounded-full"
             ></span>
-            <span class="relative">Paid</span>
+            <span className="relative">Absent</span>
           </span>
         </td>
         <td
-          className="px-3 py-5 border-b border-gray-200 bg-white text-sm text-right"
+          className="px-3 py-5 border-b border-gray-200 bg-white text-sm text-center"
         >
           <button
             type="button"

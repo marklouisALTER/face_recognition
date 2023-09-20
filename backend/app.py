@@ -46,6 +46,8 @@ def test_db_connection():
     return jsonify({"message": f"Database Connection Successful: {result[0]}"})
 
 
+
+
 @app.route('/login', methods=['POST'])
 def login():
     # Assuming the frontend sends JSON data with username and password
@@ -62,30 +64,78 @@ def login():
     cursor.close()
 
     if user:
-        # Include user information in the response JSON
         user_data = {
-            "user_id": user[0],  # Modify this to match your database schema
-            "username": user[1],  # Modify this to match your database schema
-            # Add more user-related data here
+            "user_id": user[0],  
+            "username": user[1],  
+
         }
 
-        # Create a JWT token
         token_payload = {
             "user_id": user_data["user_id"],
             "username": user_data["username"],
-            "exp": datetime.utcnow() + timedelta(hours=1)  # Token expiration time (adjust as needed)
+            "access_type": "Bearer",  
+            "exp": datetime.utcnow() + timedelta(hours=1)
         }
 
-        # Your secret key for signing the token (keep this secret)
         secret_key = "your_secret_key_here"
 
         token = jwt.encode(token_payload, secret_key, algorithm="HS256")
+
+
+        token = "Bearer " + token
 
         return jsonify({"message": "Login successful", "user_data": user_data, "token": token})
     else:
         return jsonify({"message": "Invalid credentials"}), 401
 
 
+
+
+@app.route('/employeedata', methods=['POST'])
+def employeeData():
+    firstname = request.form.get('firstname')
+    lastname = request.form.get('lastname')
+    imageupload = request.files.get('imageupload')  
+
+    cursor = db.cursor()
+
+    try:
+
+        insert_query = "INSERT INTO tbl_empdata (first_name, last_name, face_image) VALUES (%s, %s, %s)"
+        image_data = imageupload.read()
+        
+        cursor.execute(insert_query, (firstname, lastname, image_data))
+        db.commit()  
+        
+        cursor.close()
+
+        return jsonify({"message": "Employee data and image inserted successfully"})
+    except Exception as e:
+        db.rollback()  
+        cursor.close()
+        return jsonify({"message": "Error inserting data: " + str(e)}), 500
+
+
+
+
+@app.route('/all_employees', methods=['GET'])
+def get_usernames():
+    cursor = db.cursor()
+    try:
+        query = "SELECT first_name, employee_id FROM tbl_empdata"
+        cursor.execute(query)
+        result = cursor.fetchall()
+        data = [{"first_name": row[0], "employee_id": row[1]} for row in result]
+        return jsonify({"data": data})
+    except Exception as e:
+        return jsonify({"message": "Error fetching data: " + str(e)}), 500
+    finally:
+        cursor.close()
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+    
 # @app.route('/match-face', methods=['POST'])
 # def match_face():
 #     # Assuming the frontend sends a serialized face descriptor
@@ -148,6 +198,3 @@ def login():
 # face_recognizer = cv2.dnn.readNetFromTorch(model_path)
 
 # # The rest of your code...
-
-if __name__ == '__main__':
-    app.run(debug=True)
