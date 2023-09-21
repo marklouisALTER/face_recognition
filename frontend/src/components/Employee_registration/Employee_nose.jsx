@@ -173,7 +173,7 @@ export const Employee_nose = ({orientation,toggle,toggleDown}) => {
             </Form.Item>
             <div className='flex justify-end gap-2 md:justify-end'>
               <Button 
-                classNames={toggleDown}
+                onClick={toggleDown}
                 className='bg-blue-600 w-[10rem] md:w-full hover:bg-blue-700 text-white'
                 >
                 Go back

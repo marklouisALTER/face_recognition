@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 
-export const Header = ({user,leftbar,logout}) => {
+export const Header = ({user,leftbar,logout, openNotif}) => {
 
     // const { logout } = useAuth();
   
@@ -60,8 +60,11 @@ export const Header = ({user,leftbar,logout}) => {
                 )}
              </div>
 
-                <div className='hidden md:flex bg-transparent p-2 rounded-md cursor-pointer text-white hover:bg-secondary hover:text-primary hover:bg-white'>
-                    <AiFillNotification className='text-2xl'/>
+                <div className='hidden md:flex bg-transparent p-2 rounded-md cursor-pointer text-white hover:bg-secondary hover:text-primary hover:bg-white lg:hidden'>
+                    <AiFillNotification 
+                      onClick={openNotif}
+                      
+                      className='text-2xl'/>
                 </div>
 
                 <div className='flex bg-transparent p-2 rounded-md cursor-pointer text-white hover:bg-secondary hover:text-primary hover:bg-white md:hidden'>

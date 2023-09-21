@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#44a03e",
+        primary: "#5d99ff",
         secondary: "#000000",
         optional: "#eeeeee",
         onMouse: "#166534",

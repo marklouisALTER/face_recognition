@@ -17,6 +17,7 @@ export const Dashboard = ({title, leftbar,setLeftbar}) => {
     const {isAuthenticated, getUser, logout} = useAuth();
     const navigate = useNavigate();    
     const [user] = useState(getUser());
+    const [isNotification, setIsNotification] = useState(false);
 
     useEffect(() => {
 
@@ -98,7 +99,13 @@ export const Dashboard = ({title, leftbar,setLeftbar}) => {
             <Leftbar leftbar={leftbar}/>
         </div>
         <div className='w-full h-full'>
-            <Header user={user} logout={logout} leftbar={() => setLeftbar(prevState => !prevState)}/>
+            <Header 
+                user={user} 
+                openNotif={() => setIsNotification(prevState => !prevState)} 
+                logout={logout} 
+                leftbar={() => setLeftbar(prevState => !prevState)}
+            />
+
             <div className='h-[85%] overflow-y-hidden'>
             
                 <div className='m-2'>
@@ -163,8 +170,14 @@ export const Dashboard = ({title, leftbar,setLeftbar}) => {
                                 </div>
                         </div>
                     </div>
-                    <div className='hidden lg:block rounded-md bg-optional shadow-md overflow-y-auto shadow-spread shadow-gray-300'>
-                        <Notification />
+                    <div className='hidden lg:block rounded-md overflow-y-auto'>
+                    <div className='bg-primary p-2 rounded-md'>
+                        <h1 className='text-white font-secondary text-xl text-center'>Notifications</h1>
+                    </div>
+                        <Notification 
+                            openNotif={() => setIsNotification(prevState => !prevState)} 
+                            notification={isNotification}
+                        />
                     </div>
                 </div>
 

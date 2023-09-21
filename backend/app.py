@@ -8,7 +8,7 @@ import os
 import wget
 import jwt
 from datetime import datetime, timedelta
-
+import base64
 
 app = Flask(__name__)
 CORS(app)
@@ -95,7 +95,7 @@ def login():
 def employeeData():
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')
-    imageupload = request.files.get('imageupload')  
+    imageupload = request.files.get('file')
 
     cursor = db.cursor()
 
@@ -131,6 +131,36 @@ def get_usernames():
         return jsonify({"message": "Error fetching data: " + str(e)}), 500
     finally:
         cursor.close()
+
+
+@app.route('/fetch_all_employees', methods=['GET'])
+def get_all_employees():
+    cursor = db.cursor()
+    try:
+        query = "SELECT * FROM tbl_empdata"
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        # Convert binary data (e.g., face_image) to Base64
+        data = []
+        for row in result:
+            employee_id, first_name, last_name, face_image_blob = row
+            face_image_base64 = base64.b64encode(face_image_blob).decode('utf-8')
+            data.append({
+                "employee_id": employee_id,
+                "first_name": first_name,
+                "last_name": last_name,
+                "face_image": face_image_base64
+            })
+        
+        return jsonify({"data": data})
+    except Exception as e:
+        return jsonify({"message": "Error Fetching data: " + str(e)}), 500
+    finally:
+        cursor.close()
+
+
+
 
 
 if __name__ == '__main__':
