@@ -3,11 +3,14 @@ import face_logo from '../../assets/levi.jpg';
 import { AiOutlineCheck,AiTwotoneDelete } from 'react-icons/ai'
 
 
-export const Notification = ({notification}) => {
+export const Notification = () => {
   return (
     <div className='w-full pt-3 flex flex-col gap-3'>
-        {notification ? (
-        <div className='w-full bg-shadow rounded-md grid grid-rows-2'>
+        <div 
+            className='w-full border rounded-xl grid grid-rows-2 shadow hover:shadow-xl 
+            hover:shadow-spread-sm hover:shadow-gray-300 transition-all delay-50
+            ease-in-out cursor-pointer'>
+
             <div className='row-span-1 p-2'>
                 <div className='flex items-center justify-between'>
                     <div className='flex gap-2 items-center'>
@@ -42,8 +45,6 @@ export const Notification = ({notification}) => {
                 </div>
             </div>
         </div>
-    ): 
-    "<p>Tewsting</p>"}
 </div>
   )
 }

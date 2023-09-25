@@ -10,12 +10,19 @@ import { Employee_reyes } from '../Employee_registration/Employee_reyes'
 import { Employee_mouth } from '../Employee_registration/Employee_mouth'
 import { Employee_nose } from '../Employee_registration/Employee_nose'
 import { StepperInformation } from '../layout/StepperInformation'
+import { useNavigate } from 'react-router-dom'
 export const AddEmployee = ({leftbar,setLeftbar,title}) => {
-    const {getUser, logout} = useAuth();
+
+    const {getUser, logout,isAuthenticated} = useAuth();
     const [user] = useState(getUser());
     const [orientation, setOrientation] = useState('vertical');
-
     const [stepCounter, setStepCounter] = useState(0);
+    const navigate = useNavigate();
+
+    if(!isAuthenticated()){
+        navigate('/login');
+        }
+
 
     useEffect(() => {
         document.title = title;

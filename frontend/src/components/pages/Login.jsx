@@ -5,6 +5,10 @@ import { useAuth } from '../Authentication/useAuth'
 import { Link } from 'react-router-dom'
 import { Modal } from '../Modal/Modal'
 import { useNavigate } from 'react-router-dom'
+import { FaUserLock } from 'react-icons/fa'
+import { PiSignInBold } from 'react-icons/pi'
+import { BiSolidKey } from 'react-icons/bi'
+import { MdVpnKeyOff } from 'react-icons/md'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 AOS.init();
@@ -94,7 +98,7 @@ export const Login = ({title}) => {
 
         <div className="mt-5 flex items-center">
             <div className="border-t border-gray-500 flex-grow"></div>
-                <p className="mx-2 font-secondary">Username</p>
+                <p className="mx-2 font-secondary flex items-center gap-2"><FaUserLock />Username</p>
             <div className="border-t border-gray-500 flex-grow"></div>
         </div>
 
@@ -110,7 +114,7 @@ export const Login = ({title}) => {
 
           <div className="mt-5 flex items-center">
               <div className="border-t border-gray-500 flex-grow"></div>
-                  <p className="mx-2 font-secondary">Password</p>
+                  <p className="mx-2 font-secondary flex items-center gap-2"><BiSolidKey />Password</p>
               <div className="border-t border-gray-500 flex-grow"></div>
           </div>
 
@@ -142,12 +146,15 @@ export const Login = ({title}) => {
           <button 
               onClick={submitFunction}
               className='p-2 mt-5 rounded-xl transition-all delay-100 ease-in-out text-secondary font-secondary
-              bg-primary hover:bg-green-800 hover:text-white focus:outline-none focus:ring ring-primary'>
+              bg-primary hover:bg-green-800 hover:text-white focus:outline-none focus:ring ring-primary flex
+              items-center gap-2 justify-center'>
+                <PiSignInBold />
             Sign In
           </button>
-          <div className='mt-5 mb-5 ml-auto'>
-              <h1 className='font-optional text-primary'>Forgot Password</h1>
-          </div>
+          <Link className='mt-5 mb-5 ml-auto text-primary hover:text-secondary transition-all delay-50
+                ease-in-out'>
+              <h1 className='font-optional flex items-center gap-2'><MdVpnKeyOff /> Forgot Password</h1>
+          </Link>
           <div className='mt-20'>
               <h1 className='text-gray-400 font-secondary text-center'>@ Created by Markme 2023</h1>
           </div>

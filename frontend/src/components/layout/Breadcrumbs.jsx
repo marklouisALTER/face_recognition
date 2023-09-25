@@ -7,25 +7,23 @@ export const Breadcrumbs = () => {
 
   return (
     <Breadcrumb className='font-secondary'>
-    <Breadcrumb.Item href="/">Landing Page</Breadcrumb.Item>
+      <Breadcrumb.Item href="/">Landing Page</Breadcrumb.Item>
 
-    {paths.map((path, index) => {
+      {paths.map((path, index) => {
         const routeTo = `/${paths.slice(0, index + 1).join('/')}`;
         const isLast = index === paths.length - 1;
-        
+
         return (
-            <Breadcrumb.Item
+          <Breadcrumb.Item
             key={routeTo}
-            active={isLast}
-            as={isLast ? 'span' : Link}
-            to={routeTo}
-            >
+            href={isLast ? undefined : routeTo}
+            onClick={isLast ? undefined : () => history.push(routeTo)}
+            className={isLast ? 'ant-breadcrumb-link-disabled' : ''}
+          >
             {path.charAt(0).toLocaleUpperCase() + path.slice(1)}
-            </Breadcrumb.Item>
+          </Breadcrumb.Item>
         );
-
-    })}
-
+      })}
     </Breadcrumb>
-);
-}
+  );
+};

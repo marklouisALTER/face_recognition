@@ -1,0 +1,4 @@
+/* Custom CSS class to hide the scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

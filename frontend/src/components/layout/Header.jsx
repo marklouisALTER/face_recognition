@@ -6,10 +6,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 
-export const Header = ({user,leftbar,logout, openNotif}) => {
+export const Header = ({user,leftbar,logout, openNotif, notifMobile}) => {
 
-    // const { logout } = useAuth();
-  
     const [isActiveProfile, setIsActiveProfile] = useState(false);
 
 
@@ -40,19 +38,22 @@ export const Header = ({user,leftbar,logout, openNotif}) => {
                 </div>
                 {isActiveProfile &&
                 (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 shadow-lg shadow-spread shadow-gray-300 rounded-lg">
+                <div 
+                    className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 shadow-lg shadow-spread 
+                    shadow-gray-300 rounded-lg z-[999]">
+
                     <div className="py-2">
                       <Link 
                         to={''}
-                        className="block px-4 py-2 font-secondary text-gray-800 hover:bg-gray-100">
+                        className="block px-4 py-2 font-secondary text-gray-800 hover:bg-optional">
                         Settings
                       </Link>
 
-                      <button
+                      <Link
                         onClick={logout}
-                        className="block px-4 py-2 text-gray-800 font-secondary hover:bg-gray-100">
+                        className="block px-4 py-2 text-gray-800 font-secondary hover:bg-optional">
                         Logout
-                      </button>
+                      </Link>
                       
                     </div>
                     <div className="absolute top-[-1rem] right-[.7rem] mt-2 w-6 h-6 transform translate-x-1 -rotate-45 bg-white"></div>
@@ -60,15 +61,17 @@ export const Header = ({user,leftbar,logout, openNotif}) => {
                 )}
              </div>
 
-                <div className='hidden md:flex bg-transparent p-2 rounded-md cursor-pointer text-white hover:bg-secondary hover:text-primary hover:bg-white lg:hidden'>
+                <Link 
+                    onClick={notifMobile}
+                    className='hidden md:flex bg-transparent p-2 rounded-md cursor-pointer text-white hover:bg-secondary 
+                    hover:text-primary hover:bg-white lg:hidden'>
                     <AiFillNotification 
-                      onClick={openNotif}
-                      
                       className='text-2xl'/>
-                </div>
+                </Link>
 
                 <div className='flex bg-transparent p-2 rounded-md cursor-pointer text-white hover:bg-secondary hover:text-primary hover:bg-white md:hidden'>
-                    <BiDotsVertical className='text-2xl'/>
+                    <BiDotsVertical 
+                      className='text-2xl'/>
                 </div>
 
 

@@ -1,0 +1,11 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    background: #5d99ff;
+    background: -webkit-linear-gradient(43deg, #5d99ff 0%, #c964ff 100%);
+    background: linear-gradient(43deg, #5d99ff 0%, #c964ff 100%);
+}

@@ -17,6 +17,7 @@ export default {
         primary: ['Roboto', 'sans-serif'],
         secondary: ['Karla', 'sans-serif'],
         optional : ['Inter', 'sans-serif'],
+        fontBold: ['Bungee', 'cursive'],
       },
     },
   },

@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import mysql.connector
 import cv2
 import numpy as np
@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import base64
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # MySQL Database Connection
 db = mysql.connector.connect(
@@ -89,7 +89,35 @@ def login():
         return jsonify({"message": "Invalid credentials"}), 401
 
 
+@app.route('/updateemployee/<int:employee_id>', methods=['PATCH'])
+def update_employee(employee_id):
+    
+    if request.method == 'PATCH':
+        firstname = request.form.get('first_name')
+        lastname = request.form.get('last_name')
+        imageupload = request.files.get('file')
 
+        cursor = db.cursor()
+
+        try:
+            cursor.execute("SELECT COUNT(*) FROM tbl_empdata WHERE employee_id = %s", (employee_id,))
+            if cursor.fetchone()[0] == 0:
+                return jsonify({"message": "Employee not found"}), 404
+
+            update_query = "UPDATE tbl_empdata SET first_name = %s, last_name = %s, face_image = %s WHERE employee_id = %s"
+            image_data = imageupload.read()
+
+            cursor.execute(update_query, (firstname, lastname, image_data, employee_id))
+            db.commit()
+
+            cursor.close()
+
+            return jsonify({"message": "Employee data and image updated successfully"})
+        except Exception as e:
+            db.rollback()
+            cursor.close()
+            return jsonify({"message": "Error updating data: " + str(e)}), 500
+        
 
 @app.route('/employeedata', methods=['POST'])
 def employeeData():
@@ -114,6 +142,24 @@ def employeeData():
         db.rollback()  
         cursor.close()
         return jsonify({"message": "Error inserting data: " + str(e)}), 500
+
+
+
+@app.route('/employeedata/<int:employee_id>', methods=['DELETE'])
+def deleteEmployee(employee_id):
+    cursor = db.cursor()
+
+    try:
+        delete_query = "DELETE FROM tbl_empdata WHERE employee_id = %s"
+        cursor.execute(delete_query, (employee_id,))
+        db.commit()
+        cursor.close()
+
+        return jsonify({"message": f"Employee with ID {employee_id} deleted successfully"})
+    except Exception as e:
+        db.rollback()
+        cursor.close()
+        return jsonify({"message": "Error deleting data: " + str(e)}), 500
 
 
 
@@ -159,6 +205,30 @@ def get_all_employees():
     finally:
         cursor.close()
 
+
+@app.route('/view_all_attendance', methods=['GET'])
+def view_all_attendance():
+    cursor = db.cursor()
+    try:
+        query = "SELECT attendance_id, employee_id, full_name, date, time_in, time_out FROM tbl_attendrec"
+        cursor.execute(query)
+        result = cursor.fetchall()
+        # Convert the result to a list of dictionaries for easier JSON serialization
+        attendance_data = []
+        for row in result:
+            attendance_data.append({
+                'attendance_id': row[0],
+                'employee_id': row[1],
+                'full_name': row[2],
+                'date': row[3],
+                'time_in': row[4],
+                'time_out': row[5]
+            })
+        return jsonify({'attendance_data': attendance_data})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+    finally:
+        cursor.close()
 
 
 

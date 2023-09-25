@@ -10,14 +10,17 @@ import face_logo from '../../assets/face_logo.png';
 import { Notification } from '../Notification/Notification';
 import { FaClipboardList } from 'react-icons/fa'
 import { BiSolidUserPlus } from 'react-icons/bi'
+import { MobileNotif } from '../Notification/MobileNotif';
 export const Dashboard = ({title, leftbar,setLeftbar}) => {
 
     // const videoRef = useRef(null);
     // const canvasRef = useRef(null);
-    const {isAuthenticated, getUser, logout} = useAuth();
-    const navigate = useNavigate();    
-    const [user] = useState(getUser());
-    const [isNotification, setIsNotification] = useState(false);
+
+    const {isAuthenticated, getUser, logout} = useAuth(); // importing authentication
+    const navigate = useNavigate();    // routing
+    const [user] = useState(getUser()); // getting user info in session
+    const [isNotification, setIsNotification] = useState(false); // notification in bigger size
+    const [isMobileNotif, setIsMobileNotif] = useState(false); // notification in smaller size
 
     useEffect(() => {
 
@@ -104,6 +107,7 @@ export const Dashboard = ({title, leftbar,setLeftbar}) => {
                 openNotif={() => setIsNotification(prevState => !prevState)} 
                 logout={logout} 
                 leftbar={() => setLeftbar(prevState => !prevState)}
+                notifMobile ={() => setIsMobileNotif(prevState => !prevState)}
             />
 
             <div className='h-[85%] overflow-y-hidden'>
@@ -172,7 +176,7 @@ export const Dashboard = ({title, leftbar,setLeftbar}) => {
                     </div>
                     <div className='hidden lg:block rounded-md overflow-y-auto'>
                     <div className='bg-primary p-2 rounded-md'>
-                        <h1 className='text-white font-secondary text-xl text-center'>Notifications</h1>
+                        <h1 className='text-white font-secondary text-xl text-center'>Future Plans / Sticky Notes</h1>
                     </div>
                         <Notification 
                             openNotif={() => setIsNotification(prevState => !prevState)} 
@@ -182,7 +186,9 @@ export const Dashboard = ({title, leftbar,setLeftbar}) => {
                 </div>
 
             </div>
-        </div>  
+        </div>
+        {isMobileNotif ? <MobileNotif openNotif={() => setIsMobileNotif(prevState => !prevState )}/> : '' }
+        
     </div>
     );
 };
