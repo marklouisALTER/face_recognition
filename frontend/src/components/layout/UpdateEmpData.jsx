@@ -17,43 +17,43 @@ export const UpdateEmpData = ({handleUpdate, employee_id, first_name, last_name,
 
   
   const onSuccess = async (values) => {
-
     const formData = new FormData();
     let error = {
-      title : "",
-      comment:"",
+      title: "",
+      comment: "",
+    };
+  
+    formData.append('employee_id', values.employee_id);
+    formData.append('first_name', values.first_name);
+    formData.append('last_name', values.last_name);
+  
+    if (values.imageupload && values.imageupload.length > 0) {
+      const image = values.imageupload[0]; // Assuming values.imageupload is an array of File objects
+      formData.append('file', image, image.name);
     }
-
-    formData.append('employee_id', values.employee_id)
-    formData.append('first_name', values.first_name)
-    formData.append('last_name', values.last_name)    
-
-    if(values.imageupload && values.imageupload.length > 0){
-      formData.append('file', values.imageupload[0])
-    }
-
-    try{
-      const response = await axios.patch("http://localhost:5000/updateemployee",formData, {
+  
+    try {
+      const response = await axios.put("http://localhost:5000/updateemployee", formData, {
         headers: {
-          'Content-type': 'multipart/form-data'
-        }
+          'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+        },
+        withCredentials: true, // Add this line
       });
-
+  
       console.log('Response from backend ', response.data);
       error = {
         title: "Success",
-        comment: "Data Updated Successfully"
-      }
-      setIsValidate(error)
-    }catch(e) {
+        comment: "Data Updated Successfully",
+      };
+      setIsValidate(error);
+    } catch (e) {
       console.log("Error", e);
-      error = { 
+      error = {
         title: "Error",
-        comment: "Data not updated there is problem in the server"
-      }
-      setIsValidate(error)
+        comment: "Data not updated, there is a problem in the server",
+      };
+      setIsValidate(error);
     }
-
   };
 
   const onFinishFailed = (errorInfo) => {

@@ -8,6 +8,7 @@ import TableComponent from '../layout/TableComponent'
 import { Modal } from '../Modal/Modal'
 import { LuSettings2 } from 'react-icons/lu'
 import axios from 'axios'
+import { UpdateRecord } from '../layout/UpdateRecord'
 
 export const AttendanceRecord = ({leftbar,title,setLeftbar}) => {
 
@@ -15,6 +16,8 @@ export const AttendanceRecord = ({leftbar,title,setLeftbar}) => {
     const [user] = useState(getUser());
     const navigate = useNavigate();
     const [dataRec, setDataRec] = useState([])
+    const [popupUpdate, setPopupUpdate] = useState(false)
+    const [selectedDataValue, setSelectedDataValue] = useState([])
     const [isValidate, setIsValidate] = useState({
         title: '',
         comment: ''
@@ -59,10 +62,10 @@ export const AttendanceRecord = ({leftbar,title,setLeftbar}) => {
 
 
     const handleUpdate = async (id) => {
-        const error = {
-            title: 'Update',
-            comment: `Connect mo na sa backend id mo ${id}`
-        }
+
+        const selectedData = dataRec.filter(items => items.attendance_id === id)
+        setSelectedDataValue(selectedData[0])
+        setPopupUpdate(true)
     }
 
     return (
@@ -77,7 +80,12 @@ export const AttendanceRecord = ({leftbar,title,setLeftbar}) => {
                 <div className='m-2'>
                     <Breadcrumbs/>
                 </div>
-                    <TableComponent dataRec={dataRec} data={0} handleDelete={handleDelete} handleUpdate={handleUpdate} />
+                    <TableComponent 
+                        dataRec={dataRec} 
+                        data={0} 
+                        handleDelete={handleDelete} 
+                        handleUpdate={handleUpdate} 
+                    />
                 </div>
         </div>  
         {isValidate.title && 
@@ -89,8 +97,13 @@ export const AttendanceRecord = ({leftbar,title,setLeftbar}) => {
                 comment: '',
 
             }))
-        }/>
+        }/>}
 
+        {popupUpdate && 
+            <UpdateRecord 
+                {...selectedDataValue}
+                toggle={() => setPopupUpdate(prevState =>!prevState)}
+            />
         }
     </div>
   )

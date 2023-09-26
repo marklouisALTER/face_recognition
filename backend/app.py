@@ -89,34 +89,33 @@ def login():
         return jsonify({"message": "Invalid credentials"}), 401
 
 
-@app.route('/updateemployee/<int:employee_id>', methods=['PATCH'])
-def update_employee(employee_id):
-    
-    if request.method == 'PATCH':
-        firstname = request.form.get('first_name')
-        lastname = request.form.get('last_name')
-        imageupload = request.files.get('file')
+@app.route('/updateemployee/<int:employee_id>', methods=['PUT'])
+def updateemployee(employee_id):
+    firstname = request.form.get('first_name')
+    lastname = request.form.get('last_name')
+    imageupload = request.files.get('file')
 
-        cursor = db.cursor()
+    cursor = db.cursor()
 
-        try:
-            cursor.execute("SELECT COUNT(*) FROM tbl_empdata WHERE employee_id = %s", (employee_id,))
-            if cursor.fetchone()[0] == 0:
-                return jsonify({"message": "Employee not found"}), 404
+    try:
+        cursor.execute("SELECT COUNT(*) FROM tbl_empdata WHERE employee_id = %s", (employee_id,))
+        if cursor.fetchone()[0] == 0:
+            return jsonify({"message": "Employee not found"}), 404
 
-            update_query = "UPDATE tbl_empdata SET first_name = %s, last_name = %s, face_image = %s WHERE employee_id = %s"
-            image_data = imageupload.read()
+        update_query = "UPDATE tbl_empdata SET first_name = %s, last_name = %s, face_image = %s WHERE employee_id = %s"
+        image_data = imageupload.read()
 
-            cursor.execute(update_query, (firstname, lastname, image_data, employee_id))
-            db.commit()
+        cursor.execute(update_query, (firstname, lastname, image_data, employee_id))
+        db.commit()
 
-            cursor.close()
+        cursor.close()
 
-            return jsonify({"message": "Employee data and image updated successfully"})
-        except Exception as e:
-            db.rollback()
-            cursor.close()
-            return jsonify({"message": "Error updating data: " + str(e)}), 500
+        return jsonify({"message": "Employee data and image updated successfully"})
+    except Exception as e:
+        db.rollback()
+        cursor.close()
+        return jsonify({"message": "Error updating data: " + str(e)}), 500
+
         
 
 @app.route('/employeedata', methods=['POST'])
@@ -234,7 +233,7 @@ def view_all_attendance():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="localhost", port=5000)
     
 # @app.route('/match-face', methods=['POST'])
 # def match_face():
