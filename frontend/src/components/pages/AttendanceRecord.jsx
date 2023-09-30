@@ -53,16 +53,25 @@ export const AttendanceRecord = ({leftbar,title,setLeftbar}) => {
     },[])
 
     const handleDelete = async (id) => {
-        const error = {
-            title: 'Delete',
-            comment: `Bounce kana ito id mo ${id}`
+
+        try{
+            const response = await axios.delete(`http://localhost:5000/attendance_record/${id}`)
+            const updateData = dataRec.filter(item => item.attendance_id !== id)
+            setDataRec(updateData)
+
+            const error = {
+                title: 'Success',
+                comment: `The ${id} is Successfully Deleted`
+            }
+
+            setIsValidate(error)
+        }catch(e){
+
         }
-        setIsValidate(error)
     }
-
-
+    
+    // Update button it will filter the data 
     const handleUpdate = async (id) => {
-
         const selectedData = dataRec.filter(items => items.attendance_id === id)
         setSelectedDataValue(selectedData[0])
         setPopupUpdate(true)
@@ -106,5 +115,5 @@ export const AttendanceRecord = ({leftbar,title,setLeftbar}) => {
             />
         }
     </div>
-  )
+)
 }

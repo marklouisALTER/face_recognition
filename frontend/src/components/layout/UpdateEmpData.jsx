@@ -17,6 +17,7 @@ export const UpdateEmpData = ({handleUpdate, employee_id, first_name, last_name,
 
   
   const onSuccess = async (values) => {
+
     const formData = new FormData();
     let error = {
       title: "",
@@ -28,32 +29,38 @@ export const UpdateEmpData = ({handleUpdate, employee_id, first_name, last_name,
     formData.append('last_name', values.last_name);
   
     if (values.imageupload && values.imageupload.length > 0) {
-      const image = values.imageupload[0]; // Assuming values.imageupload is an array of File objects
+      const image = values.imageupload[0]; 
       formData.append('file', image, image.name);
     }
   
-    try {
-      const response = await axios.put("http://localhost:5000/updateemployee", formData, {
-        headers: {
-          'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
-        },
-        withCredentials: true, // Add this line
-      });
+      try {
+        const response = await axios.put(`http://localhost:5000/updateemployee/${values.employee_id}`, formData, {
+          headers: {
+            'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+          },
+          withCredentials: true,
+        });
   
-      console.log('Response from backend ', response.data);
-      error = {
-        title: "Success",
-        comment: "Data Updated Successfully",
-      };
-      setIsValidate(error);
+        console.log('Response from backend ', response.data);
+
+          error = {
+            title: "Success",
+            comment: "Data Updated Successfully",
+          };
+
+          setIsValidate(error);
+
     } catch (e) {
+
       console.log("Error", e);
       error = {
         title: "Error",
         comment: "Data not updated, there is a problem in the server",
       };
+
       setIsValidate(error);
     }
+    
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -81,7 +88,6 @@ export const UpdateEmpData = ({handleUpdate, employee_id, first_name, last_name,
       };
       
       const handleUpdateClick = () => {
-        // Explicitly add the image upload field to the form values
         form.setFieldsValue({
           imageupload: form.getFieldValue('imageupload'),
         });
@@ -177,13 +183,18 @@ export const UpdateEmpData = ({handleUpdate, employee_id, first_name, last_name,
                 ]}
               >
                 <Upload
-                listType="picture"
-                defaultFileList={[...fileList]}
-                onChange={handleFileChange}
-                accept="image/*"
-                name="file"
-              >
-                <Button icon={<UploadOutlined />}>Upload</Button>
+                  listType="picture"
+                  defaultFileList={[...fileList]}
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  name="file"
+                >
+                <Button 
+                  icon={<UploadOutlined />}
+                >
+                  Upload
+                </Button>
+
               </Upload>
               </Form.Item>
 

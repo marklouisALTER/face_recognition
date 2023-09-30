@@ -176,7 +176,7 @@ export const Dashboard = ({title, leftbar,setLeftbar}) => {
                     </div>
                     <div className='hidden lg:block rounded-md overflow-y-auto'>
                     <div className='bg-primary p-2 rounded-md'>
-                        <h1 className='text-white font-secondary text-xl text-center'>Future Plans / Sticky Notes</h1>
+                        <h1 className='text-white font-secondary text-xl text-center'>Notes for today</h1>
                     </div>
                         <Notification 
                             openNotif={() => setIsNotification(prevState => !prevState)} 

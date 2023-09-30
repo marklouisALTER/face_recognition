@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { Button, Input, Space, Table } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import useItems from 'antd/es/menu/hooks/useItems';
 
 
 const TableComponent = ({data,dataRec,handleDelete, handleUpdate}) => {
@@ -240,7 +241,7 @@ const TableComponent = ({data,dataRec,handleDelete, handleUpdate}) => {
             columns={data.length > 0 ? columnsEmployeeData : columnsAttendanceRecord } 
             dataSource={whatData.map((item) => ({
                 ...item,
-                key: item.employee_id
+                key: data.length > 0 ? item.employee_id : item.attendance_id
             }))}
             pagination={{ pageSize: 4 }} />;
 };

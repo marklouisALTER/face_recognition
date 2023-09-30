@@ -5,7 +5,6 @@ import { AiFillNotification,AiFillCaretDown } from 'react-icons/ai'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-
 export const Header = ({user,leftbar,logout, openNotif, notifMobile}) => {
 
     const [isActiveProfile, setIsActiveProfile] = useState(false);
@@ -25,16 +24,16 @@ export const Header = ({user,leftbar,logout, openNotif, notifMobile}) => {
 
                 <div 
                       onClick={() => setIsActiveProfile(prevState => !prevState)}
-                      className='hidden md:flex items-center gap-2 bg-primary hover:bg-white p-1 px-3 rounded-md
-                      transition-all delay-100 ease-in-out cursor-pointer text-white hover:text-primary'>
+                      className='hidden md:flex items-center gap-2 bg-primary p-1 px-3 rounded-md
+                      transition-all delay-100 ease-in-out cursor-pointer text-white'>
                       
-                      <div className='bg-optional rounded-full'>
-                        <BiSolidUser className='text-2xl'/>
+                      <div className='bg-blue-700 w-8 h-8 flex items-center justify-center border border-white rounded-full'>
+                          <small className='font-semibold'>{user?.slice(0,1).toUpperCase()}</small>
                       </div>
 
-                      {user && <p className='font-primary font-thin text-xs'>{user}</p>}
+                      {user && <p className='font-primary font-thin text-sm'>{user}</p>}
                       
-                      <AiFillCaretDown className=''/>
+                      <AiFillCaretDown className={`${isActiveProfile  ?  'rotate-0' : 'rotate-90'}  transition-all delay-50`}/>
                 </div>
                 {isActiveProfile &&
                 (
@@ -59,7 +58,7 @@ export const Header = ({user,leftbar,logout, openNotif, notifMobile}) => {
                     <div className="absolute top-[-1rem] right-[.7rem] mt-2 w-6 h-6 transform translate-x-1 -rotate-45 bg-white"></div>
                 </div>
                 )}
-             </div>
+            </div>
 
                 <Link 
                     onClick={notifMobile}
