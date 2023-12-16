@@ -154,7 +154,6 @@ export const Employee_leyes = ({orientation,toggle,toggleDown}) => {
               ]}
               >
               
-
             <Upload
               listType="picture"
               accept="image/*"

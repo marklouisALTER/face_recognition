@@ -154,7 +154,6 @@ export const Employee_mouth = ({orientation,toggle,toggleDown}) => {
               ]}
               >
               
-
             <Upload
               listType="picture"
               accept="image/*"

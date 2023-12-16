@@ -91,7 +91,6 @@ export const Employee_information = ({toggle,orientation}) => {
             // layout='vertical'
           >
             <Form.Item
-            
               label="First Name"
               name="firstname"
               rules={[

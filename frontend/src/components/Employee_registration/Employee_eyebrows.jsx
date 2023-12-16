@@ -168,7 +168,6 @@ export const Employee_eyebrows = ({orientation,toggleDown,toggle}) => {
                 icon={<UploadOutlined />}>
                   Upload
               </Button>
-
             </Upload>
             </Form.Item>
             <div className='flex justify-end gap-2 md:justify-end'>
