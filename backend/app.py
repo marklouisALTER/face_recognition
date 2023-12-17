@@ -375,12 +375,12 @@ def recognize_faces(image_path):
                 # Add accuracy for each feature to the result
                 result.update({
                     'feature_accuracies': {
-                        'Nose': (1 - nose_distances[0]) * 100,
-                        'Left Eye': (1 - left_eye_distances[0]) * 100,
-                        'Right Eye': (1 - right_eye_distances[0]) * 100,
-                        'Left Eyebrow': (1 - left_eyebrow_distances[0]) * 100,
-                        'Right Eyebrow': (1 - right_eyebrow_distances[0]) * 100,
-                        'Mouth': (1 - mouth_distances[0]) * 100,
+                        'Nose': round( (1 - nose_distances[0]) * 100, 2),
+                        'Left Eye': round((1 - left_eye_distances[0]) * 100, 2),
+                        'Right Eye': round((1 - right_eye_distances[0]) * 100, 2),
+                        'Left Eyebrow': round((1 - left_eyebrow_distances[0]) * 100, 2),
+                        'Right Eyebrow': round((1 - right_eyebrow_distances[0]) * 100, 2),
+                        'Mouth': round((1 - mouth_distances[0]) * 100, 2),
                     }
                 })
 
@@ -434,7 +434,9 @@ def detect_faces_endpoint():
         connect_dots(image, landmarks, list(range(48, 68)), (0, 255, 255))  # Connect mouth
 
     cv2.imwrite('./temp/detected_features.jpg', image)
-
+    # Calculate overall accuracy as the average of individual accuracies
+    overall_accuracy = sum(result['feature_accuracies'].values()) / len(result['feature_accuracies'])
+    result['overall_accuracy'] = round(overall_accuracy, 2)
     # Return the result as JSON
     return jsonify(result)
 

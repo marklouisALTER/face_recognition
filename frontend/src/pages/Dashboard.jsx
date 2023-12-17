@@ -16,11 +16,11 @@ export const Dashboard = ({title, leftbar,setLeftbar}) => {
     // const videoRef = useRef(null);
     // const canvasRef = useRef(null);
 
-    const {isAuthenticated, getUser, logout} = useAuth(); // importing authentication
-    const navigate = useNavigate();    // routing
-    const [user] = useState(getUser()); // getting user info in session
-    const [isNotification, setIsNotification] = useState(false); // notification in bigger size
-    const [isMobileNotif, setIsMobileNotif] = useState(false); // notification in smaller size
+    const {isAuthenticated, getUser, logout} = useAuth(); 
+    const navigate = useNavigate();   
+    const [user] = useState(getUser()); 
+    const [isNotification, setIsNotification] = useState(false); 
+    const [isMobileNotif, setIsMobileNotif] = useState(false); 
 
     useEffect(() => {
 

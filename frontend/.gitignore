@@ -11,7 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-
+../backend/shape_predictor_68_face_landmarks.dat
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
