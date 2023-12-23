@@ -16,7 +16,7 @@ export const Modal = ({title, comment,toggle}) => {
             <p className="text-gray-600 font-secondary">{comment}</p>
             <div className="mt-4 flex justify-end">
             <button
-                className="px-4 py-2 bg-primary text-white rounded hover:bg-onMouse hover:text-white
+                className="px-4 py-2 bg-primary text-white rounded hover:bg-blue-800 hover:text-white
                 transition-all delay-50 ease-in-out"
                 onClick={toggle}>
                 Close

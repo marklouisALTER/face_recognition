@@ -9,7 +9,7 @@ import { FaCircleExclamation } from "react-icons/fa6";
 
 import { FaUserAlt } from "react-icons/fa";
 import { Image, Progress } from 'antd';
-export const TestingFile = () => {
+export const Capture = () => {
     const [imageFile, setImageFile] = useState(null);
     const [detectedImage, setDetectedImage] = useState(null);
     const [imageFileWillSent, setImageFileWillSent] = useState(null);
@@ -117,7 +117,6 @@ export const TestingFile = () => {
         return new Blob([u8arr], { type: mime });
       };
 
-    // console.log(featureAccuracies);
     return (
         featureAccuracies ? (
             <div className='w-full h-screen grid grid-cols-1 md:grid-cols-3'>
@@ -230,7 +229,8 @@ export const TestingFile = () => {
                     transition-all delay-50 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-200' onClick={startCamera}>
                         <FaCamera className='text-3xl text-primary group-hover:text-white'/>
                     </button>
-                    <FaCircleExclamation className='absolute top-0 right-0 text-xl text-orange-400'/>
+                    <FaCircleExclamation className={`${isCameraOpen ? "hidden": "block"} absolute top-0 right-0 text-xl 
+                    text-orange-400`}/>
                 </div>
                 <button className='group bg-primary p-5 rounded-full hover:bg-blue-500
                 transition-all delay-50 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-200' onClick={captureImage}>
@@ -241,7 +241,6 @@ export const TestingFile = () => {
                     <LuScanFace className='text-3xl text-white'/>
                 </button>
             </div>
-
         </div> 
         )
     );

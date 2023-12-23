@@ -8,6 +8,7 @@ import { AddEmployee } from './pages/AddEmployee';
 import { AttendanceRecord } from './pages/AttendanceRecord';
 import { TestingFile } from './pages/TestingFile';
 import { PageNotFound } from './pages/PageNotFound';
+import { Capture } from './pages/Capture';
 function App() {
   const [leftbar, setLeftbar] = useState(true);
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/tracking-record/attendance-record" element={<AttendanceRecord title="Attendance Record" leftbar={leftbar} setLeftbar={setLeftbar} />}/>
         <Route path="/testing" element={<TestingFile /> } />
         <Route path="*" element={ <PageNotFound title="Page Not Found" /> }/>
+        <Route path="/capture" element={<Capture /> } />
       </Routes>
     </BrowserRouter>
   );

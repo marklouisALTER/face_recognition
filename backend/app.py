@@ -10,7 +10,9 @@ import os
 import wget
 import jwt
 from datetime import datetime, timedelta
+import datetime
 import base64
+import uuid
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -60,7 +62,7 @@ def login():
             "user_id": user_data["user_id"],
             "username": user_data["username"],
             "access_type": "Bearer",  
-            "exp": datetime.utcnow() + timedelta(hours=1)
+            # "exp": datetime.utcnow() + timedelta(hours=1)
         }
 
         secret_key = "your_secret_key_here"
@@ -296,13 +298,12 @@ def connect_dots(image, landmarks, dot_indices, color):
         cv2.line(image, start_point, end_point, color, 1)
 
 def recognize_faces(image_path):
-    # Load known faces from the database
+
     known_faces, known_names = load_known_faces()
 
     image = cv2.imread(image_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # Use the pre-trained face detector from dlib
     detector = dlib.get_frontal_face_detector()
     faces = detector(gray)
 
@@ -311,7 +312,6 @@ def recognize_faces(image_path):
     for face in faces:
         landmarks = predictor(gray, face)
 
-        # Draw bounding box around the face
         x, y, w, h = face.left(), face.top(), face.width(), face.height()
         cv2.rectangle(image, (x, y), (x+w, y+h), (255, 0, 0), 2)
 
@@ -401,11 +401,16 @@ def detect_faces_endpoint():
     temp_image_path = './temp/temp_image.jpg'
     file.save(temp_image_path)
 
-    # Call the recognize_faces function
     result = recognize_faces(temp_image_path)
 
-    # Add the 'detected_features.jpg' file path to the result
-    result['image_path'] = '/temp/detected_features.jpg'
+    recog_id = str(uuid.uuid4())
+    current_date = datetime.date.today()
+    formatted_date = current_date.strftime("%Y%m%d")
+    
+    image_file_name = f'EMP_TRANS_{formatted_date}_{recog_id}.jpg'
+    image_file_path = os.path.join('./temp', image_file_name)
+    
+    result['transaction_id'] = f'EMP_TRANS_{formatted_date}_{recog_id}'
 
     # Draw facial landmarks on the image
     image = cv2.imread(temp_image_path)
@@ -425,21 +430,36 @@ def detect_faces_endpoint():
             x, y = landmarks.part(i).x, landmarks.part(i).y
             cv2.circle(image, (x, y), 1, (0, 255, 0), -1)
 
-        # Connect dots with lines
         connect_dots(image, landmarks, [17, 18, 19, 20, 21], (0, 255, 0))  # Connect left eyebrow
         connect_dots(image, landmarks, [22, 23, 24, 25, 26], (0, 255, 0))  # Connect right eyebrow
         connect_dots(image, landmarks, list(range(36, 42)), (0, 0, 255))  # Connect left eye
         connect_dots(image, landmarks, list(range(42, 48)), (0, 0, 255))  # Connect right eye
         connect_dots(image, landmarks, list(range(29, 36)), (255, 0, 0))  # Connect nose
-        connect_dots(image, landmarks, list(range(48, 68)), (0, 255, 255))  # Connect mouth
+        connect_dots(image, landmarks, list(range(48, 68)), (0, 255, 255))  
 
-    cv2.imwrite('./temp/detected_features.jpg', image)
-    # Calculate overall accuracy as the average of individual accuracies
+    # Save the image with the unique file name
+    cv2.imwrite(image_file_path, image)
+
+    # Save the common image with landmarks
+    image_with_landmarks = image.copy()
+    for face in faces:
+        landmarks = predictor(gray, face)
+        connect_dots(image_with_landmarks, landmarks, [17, 18, 19, 20, 21], (0, 255, 0)) 
+        connect_dots(image_with_landmarks, landmarks, [22, 23, 24, 25, 26], (0, 255, 0))  
+        connect_dots(image_with_landmarks, landmarks, list(range(36, 42)), (0, 0, 255))  
+        connect_dots(image_with_landmarks, landmarks, list(range(42, 48)), (0, 0, 255)) 
+        connect_dots(image_with_landmarks, landmarks, list(range(29, 36)), (255, 0, 0))  
+        connect_dots(image_with_landmarks, landmarks, list(range(48, 68)), (0, 255, 255))  
+
+    cv2.imwrite('./temp/detected_features.jpg', image_with_landmarks)
+
     overall_accuracy = sum(result['feature_accuracies'].values()) / len(result['feature_accuracies'])
     result['overall_accuracy'] = round(overall_accuracy, 2)
-    # Return the result as JSON
-    return jsonify(result)
 
+    # Add the unique image file path to the result
+    result['image_path'] = f'/temp/{image_file_name}'
+
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(host="localhost", port=5000)

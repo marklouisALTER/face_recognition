@@ -110,7 +110,8 @@ export const Login = ({title}) => {
                     value={credentials.username}
                     onChange={handleCredentials} 
                     required
-                    className='border-2 border-primary w-full py-2 rounded-xl px-5 font-optional'/>
+                    className='border-2 border-primary w-full py-2 rounded-xl px-5 font-optional focus:outline-none
+                    focus:ring focus:ring-blue-800 outline-none'/>
           </div>
 
           <div className="mt-5 flex items-center">
@@ -126,7 +127,8 @@ export const Login = ({title}) => {
                     value={credentials.password}
                     onChange={handleCredentials}
                     required
-                    className='border-2 border-primary w-full py-2 rounded-xl px-5 font-optional'/>
+                    className='border-2 border-primary w-full py-2 rounded-xl px-5 font-optional focus:outline-none
+                    focus:ring focus:ring-blue-800 outline-none'/>
           </div>
           
           <div className='flex items-center mt-5 gap-2'>
@@ -134,7 +136,7 @@ export const Login = ({title}) => {
                         id="checked-checkbox" 
                         type="checkbox" 
                         value="" 
-                        className="w-4 h-4 text-primary bg-primary border-gray-300 rounded focus:ring-secondary 
+                        className="w-4 h-4 text-primary bg-primary border-gray-300 rounded focus:ring-blue-800 
                         dark:focus:ring-primary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 
                         dark:border-gray-600" />
                 <label 
@@ -146,8 +148,8 @@ export const Login = ({title}) => {
           
           <button 
               onClick={submitFunction}
-              className='p-2 mt-5 rounded-xl transition-all delay-100 ease-in-out text-secondary font-secondary
-              bg-primary hover:bg-green-800 hover:text-white focus:outline-none focus:ring ring-primary flex
+              className='p-2 mt-5 rounded-xl transition-all delay-100 ease-in-out text-white font-secondary
+              bg-primary hover:bg-blue-800 hover:text-white focus:outline-none focus:ring ring-primary flex
               items-center gap-2 justify-center'>
                 <PiSignInBold />
             Sign In
